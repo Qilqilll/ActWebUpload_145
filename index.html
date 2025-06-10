@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Unggah File</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #ffebee, #fbe9e7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 50px 40px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      width: 600px;
+      max-width: 90%;
+      text-align: center;
+      transition: all 0.3s ease-in-out;
+    }
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 30px;
+      color: #800000;
+      font-weight: 600;
+    }
+
+    input[type="file"] {
+      padding: 14px;
+      border: 2px dashed #800000;
+      border-radius: 12px;
+      width: 100%;
+      cursor: pointer;
+      font-size: 15px;
+      background-color: #fffafa;
+      transition: background-color 0.2s;
+    }
+
+    input[type="file"]:hover {
+      background-color: #fce4ec;
+    }
+
+    .preview {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .preview img,
+    .preview iframe {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-top: 10px;
+    }
+
+    button {
+      margin-top: 30px;
+      background-color: #800000;
+      color: white;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #a93226;
+      transform: scale(1.05);
+    }
+
+    .link-list {
+      margin-top: 35px;
+    }
+
+    .link-list a {
+      display: inline-block;
+      background-color: #d7ccc8;
+      color: #4e342e;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    .link-list a:hover {
+      background-color: #bcaaa4;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Unggah File PDF/IMG</h2>
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+      <input type="file" name="fileToUpload" id="fileToUpload" onchange="previewFile()" required>
+      <div class="preview" id="filePreview"></div>
+      <button type="submit">Unggah</button>
+    </form>
+    <div class="link-list">
+      <a href="list_fileupload.php">📁 Lihat Daftar File</a>
+    </div>
+  </div>
+
+  <script>
+    function previewFile() {
+      const file = document.getElementById('fileToUpload').files[0];
+      const preview = document.getElementById('filePreview');
+      preview.innerHTML = '';
+
+      if (!file) return;
+
+      if (file.type.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        preview.appendChild(img);
+      } else if (file.type === 'application/pdf') {
+        const iframe = document.createElement('iframe');
+        iframe.src = URL.createObjectURL(file);
+        iframe.height = "300";
+        preview.appendChild(iframe);
+      } else {
+        preview.textContent = "Preview tidak tersedia untuk file ini.";
+      }
+    }
+  </script>
+</body>
+</html>
